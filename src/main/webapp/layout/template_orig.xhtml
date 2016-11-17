@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:insert name="metadata" />
+
+	<h:html>
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+		<title>OPIS</title>
+		<link rel="shortcut icon" href="#{request.contextPath}/favicon.ico" />
+		<h:outputStylesheet library="theme" name="css/theme.css" />
+		<h:outputStylesheet library="theme" name="css/som.css" />
+
+		<ui:insert name="head" />
+
+	</h:head>
+	<h:body id="body">
+	<ui:include src="/layout/timeout.xhtml" />
+		<h:outputScript library="omnifaces" name="fixviewstate.js"
+			target="head" />
+		<div class="wrapper">
+			<div class="clr" />
+			<div class="wrapper2">
+
+				<h:panelGrid columns="3" styleClass="headerWrapper"
+					columnClasses="logoheader,#{appInfo.testServer?'testheader':'prodheader'},userheader">
+					<h:outputLink value="/" styleClass="logo left">
+						<h:graphicImage library="theme" name="img/logo.png"
+							alt="UC San Diego - Health Sciences" />
+					</h:outputLink>
+					<h:panelGroup>
+						<h:outputText value="Online Personnel Information System"
+							style="color: #FFFFFF; font-size: 18px; text-align: center;" />
+						<h:outputText value=" - Test" rendered="#{appInfo.testServer}" />
+					</h:panelGroup>
+					<h:panelGroup>
+						<h:outputText value="#{badgIdentity.user.fullName} "
+							rendered="#{badgIdentity.loggedIn}" />
+						<h:outputLink
+							value="/Shibboleth.sso/Logout?return=https://a4.ucsd.edu/tritON/logout?target=http://#{appInfo.hostname}"
+							rendered="#{badgIdentity.loggedIn}">
+							<h:outputText value="Logout" />
+						</h:outputLink>
+						<h:outputLink value="/hris/home.html"
+							rendered="#{!badgIdentity.loggedIn}">
+							<h:outputText value="Login" />
+						</h:outputLink>
+					</h:panelGroup>
+				</h:panelGrid>
+
+				<!-- MENU START -->
+				<ui:include src="menu.xhtml">
+					<ui:param name="projectName" value="opis" />
+				</ui:include>
+				<!-- MENU END -->
+
+				<div class="pageContentFull">
+					<ui:insert name="body" />
+
+					<div class="clr" />
+				</div>
+			</div>
+
+			<div class="footer">
+				<ul class="address">
+					<li class="first">UCSD School of Medicine</li>
+					<li>9500 Gilman Drive, MC 0602</li>
+					<li>La Jolla, CA 92093</li>
+					<li>858-534-0830</li>
+				</ul>
+
+				<ul class="footerNav" />
+
+				<div class="footerLogo">
+					<h:graphicImage library="theme" name="img/logoFooter.gif"
+						alt="UC San Diego - School of Medicine" styleClass="logoFooter" />
+					<img src="https://a4.ucsd.edu/tritON/imagebug" />
+				</div>
+
+				<div class="copyright">
+					<p>Official Web Site of the University of California, San
+						Diego. Copyright &#169;2014 Regents of the University of
+						California. All rights reserved.</p>
+				</div>
+
+				<ul class="footerNav2" />
+			</div>
+		</div>
+	</h:body>
+	</h:html>
+
+</f:view>

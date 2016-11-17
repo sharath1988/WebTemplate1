@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form>
+		<p:growl id="msg" showDetail="true" sticky="true" for="confirmDialog,idleMonitor"/>
+		
+		<p:idleMonitor timeout="#{session.maxInactiveInterval * 100 * 6}" onidle="PF('idleDialog').show()" id="idleMonitor"/>
+						
+		<p:confirmDialog id="confirmDialog"
+			message="Your session is about to timeout due to inactivity. Please click OK to continue."
+			header="Inactivity Alert" severity="alert" widgetVar="idleDialog">
+	 
+			<p:commandButton id="confirm" value="OK" update="msg"
+				oncomplete="PF('idleDialog').hide()"
+				actionListener="#{appInfo.welcomeListener}" />
+	 
+			<p:commandButton id="Logout" value="Logout" update="msg"
+				oncomplete="PF('idleDialog').hide()"
+				actionListener="#{appInfo.logoutListener}" />
+	 
+		</p:confirmDialog>
+	
+	</h:form>
+
+
+</ui:composition>
